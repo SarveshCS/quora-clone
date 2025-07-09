@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Questions collection
+    match /questions/{questionId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null && request.auth.uid == resource.data.authorId;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.authorId;
+    }
+    
+    // Answers collection
+    match /answers/{answerId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && request.auth.uid == userId;
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
