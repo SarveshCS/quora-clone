@@ -7,6 +7,8 @@ body {
 /* Prose styles for content */
 .prose {
   max-width: none;
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 .prose h1,
@@ -43,10 +45,18 @@ body {
 .prose a {
   color: #2563eb;
   text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: all 0.2s ease;
 }
 
 .prose a:hover {
-  text-decoration: underline;
+  color: #1d4ed8;
+  text-decoration-thickness: 2px;
+}
+
+.prose a:visited {
+  color: #7c3aed;
 }
 
 .prose ul,
@@ -69,28 +79,183 @@ body {
   margin-bottom: 0.25rem;
 }
 
-.prose pre {
-  background-color: #f3f4f6;
-  padding: 1rem;
-  border-radius: 0.375rem;
-  overflow-x: auto;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+.prose img {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin: 1rem auto;
+  max-height: 500px;
+  object-fit: contain;
 }
 
-.prose code {
+.prose table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.875rem;
+}
+
+.prose th {
+  background-color: #f9fafb;
+  border: 1px solid #d1d5db;
+  font-weight: 600;
+  text-align: left;
+}
+
+.prose td {
+  border: 1px solid #e5e7eb;
+  vertical-align: top;
+}
+
+.prose blockquote {
+  border-left: 4px solid #3b82f6;
+  background-color: #f8fafc;
+  font-style: italic;
+  color: #475569;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 2rem 0;
+}
+
+/* Code syntax highlighting improvements */
+.prose pre {
+  background-color: #1f2937;
+  color: #f9fafb;
+  border-radius: 0.5rem;
+  font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.prose code:not(pre code) {
   background-color: #f3f4f6;
   color: #dc2626;
   padding: 0.125rem 0.25rem;
   border-radius: 0.25rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
 .prose pre code {
   background-color: transparent;
-  color: currentColor;
+  color: inherit;
   padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+/* Task list styling */
+.prose ul li input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.1);
+}
+
+.prose ul li.task-list-item {
+  list-style: none;
+  margin-left: -1.5rem;
+  padding-left: 1.5rem;
+}
+
+/* Strikethrough text */
+.prose del {
+  color: #6b7280;
+  text-decoration: line-through;
+}
+
+/* Highlight/mark text */
+.prose mark {
+  background-color: #fef3c7;
+  color: #92400e;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* Heading anchor links */
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  position: relative;
+  scroll-margin-top: 2rem;
+}
+
+/* Responsive images */
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 640px) {
+  .prose {
+    font-size: 0.8rem;
+  }
+  
+  .prose img {
+    max-height: 300px;
+  }
+  
+  .prose table {
+    font-size: 0.75rem;
+  }
+  
+  .prose pre {
+    font-size: 0.7rem;
+    padding: 0.75rem;
+  }
+}
+
+/* Markdown editor preview mode */
+.markdown-preview {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  min-height: 100px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.markdown-preview.empty {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* Markdown Preview Scrollbar Styling */
+.markdown-preview {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.markdown-preview::-webkit-scrollbar {
+  width: 8px;
+}
+
+.markdown-preview::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.markdown-preview::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.markdown-preview::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Enhanced image hover effects for clickable images */
+.prose img:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.prose img {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Custom scrollbar */
@@ -152,4 +317,35 @@ body {
 [data-tooltip]:hover::before {
   opacity: 1;
   visibility: visible;
+}
+
+/* Resize handle for markdown editor */
+.markdown-editor-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: se-resize;
+  background: linear-gradient(-45deg, transparent 0%, transparent 30%, #cbd5e1 30%, #cbd5e1 40%, transparent 40%, transparent 60%, #cbd5e1 60%, #cbd5e1 70%, transparent 70%);
+  transition: all 0.2s ease;
+}
+
+.markdown-editor-resize-handle:hover {
+  background: linear-gradient(-45deg, transparent 0%, transparent 30%, #94a3b8 30%, #94a3b8 40%, transparent 40%, transparent 60%, #94a3b8 60%, #94a3b8 70%, transparent 70%);
+}
+
+.markdown-editor-resize-handle.resizing {
+  background: linear-gradient(-45deg, transparent 0%, transparent 30%, #3b82f6 30%, #3b82f6 40%, transparent 40%, transparent 60%, #3b82f6 60%, #3b82f6 70%, transparent 70%);
+}
+
+/* Prevent text selection during resize */
+.markdown-editor-resizing {
+  user-select: none;
+  pointer-events: none;
+}
+
+.markdown-editor-resizing * {
+  user-select: none;
+  pointer-events: none;
 }

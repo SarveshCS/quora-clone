@@ -19,6 +19,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { formatDistanceToNow } from 'date-fns';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import { RenderTextWithLinks } from '../utils/textRendering';
+import MarkdownEditor from '../utils/MarkdownEditor';
 import { createHashtagClickHandler, createMentionClickHandler, type User } from '../utils/textUtils';
 
 interface Question {
@@ -506,18 +507,22 @@ const QuestionDetail = () => {
           
           <div className="flex-1">
             {editQuestionMode ? (
-              <>
-                <textarea
-                  className="w-full border rounded p-2 mb-2"
-                  rows={6}
+              <div className="mb-4">
+                <MarkdownEditor
                   value={editQuestionContent}
-                  onChange={e => setEditQuestionContent(e.target.value)}
+                  onChange={setEditQuestionContent}
+                  availableUsers={availableUsers}
+                  onHashtagClick={handleHashtagClick}
+                  onMentionClick={handleMentionClick}
+                  placeholder="Edit your question... You can use **bold**, *italic*, `code`, [links](url), ![images](url), #hashtags, @mentions, and more!"
+                  minHeight="150px"
+                  maxHeight="400px"
                 />
-                <div className="flex gap-2">
-                  <button className="bg-blue-600 text-white px-3 py-1 rounded" onClick={handleSaveQuestionEdit}>Save</button>
-                  <button className="bg-gray-300 px-3 py-1 rounded" onClick={() => setEditQuestionMode(false)}>Cancel</button>
+                <div className="flex gap-2 mt-2">
+                  <button className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700" onClick={handleSaveQuestionEdit}>Save</button>
+                  <button className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400" onClick={() => setEditQuestionMode(false)}>Cancel</button>
                 </div>
-              </>
+              </div>
             ) : (
               <>
                 <div className="prose max-w-none mb-4 whitespace-pre-wrap">
@@ -655,18 +660,22 @@ const QuestionDetail = () => {
                     )}
                     
                     {editAnswerId === answer.id ? (
-                      <>
-                        <textarea
-                          className="w-full border rounded p-2 mb-2"
-                          rows={4}
+                      <div className="mb-4">
+                        <MarkdownEditor
                           value={editAnswerContent}
-                          onChange={e => setEditAnswerContent(e.target.value)}
+                          onChange={setEditAnswerContent}
+                          availableUsers={availableUsers}
+                          onHashtagClick={handleHashtagClick}
+                          onMentionClick={handleMentionClick}
+                          placeholder="Edit your answer... You can use **bold**, *italic*, `code`, [links](url), ![images](url), #hashtags, @mentions, and more!"
+                          minHeight="150px"
+                          maxHeight="400px"
                         />
-                        <div className="flex gap-2">
-                          <button className="bg-blue-600 text-white px-3 py-1 rounded" onClick={() => handleSaveAnswerEdit(answer.id)}>Save</button>
-                          <button className="bg-gray-300 px-3 py-1 rounded" onClick={() => setEditAnswerId(null)}>Cancel</button>
+                        <div className="flex gap-2 mt-2">
+                          <button className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700" onClick={() => handleSaveAnswerEdit(answer.id)}>Save</button>
+                          <button className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400" onClick={() => setEditAnswerId(null)}>Cancel</button>
                         </div>
-                      </>
+                      </div>
                     ) : (
                       <>
                         <div className="prose max-w-none mb-4 whitespace-pre-wrap">
@@ -738,14 +747,15 @@ const QuestionDetail = () => {
               <label htmlFor="answer" className="block text-sm font-medium text-gray-700 mb-2">
                 Answer
               </label>
-              <textarea
-                id="answer"
-                rows={8}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              <MarkdownEditor
                 value={answerContent}
-                onChange={(e) => setAnswerContent(e.target.value)}
-                placeholder="Write your answer here..."
-                required
+                onChange={setAnswerContent}
+                availableUsers={availableUsers}
+                onHashtagClick={handleHashtagClick}
+                onMentionClick={handleMentionClick}
+                placeholder="Write your answer here... You can use **bold**, *italic*, `code`, [links](url), ![images](url), #hashtags, @mentions, and more!"
+                minHeight="200px"
+                maxHeight="500px"
               />
             </div>
             

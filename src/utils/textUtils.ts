@@ -1,5 +1,5 @@
 // Enhanced interface for users with better typing
-interface User {
+export interface User {
   uid: string;
   username: string;
   displayName?: string;
@@ -13,32 +13,42 @@ interface ParsedSegment {
 
 /**
  * Parse text and identify hashtags (#tag) and mentions (@username)
+ * Enhanced to handle more complex scenarios
  */
 export const parseTextWithTagsAndMentions = (text: string, availableUsers: User[]): ParsedSegment[] => {
   if (!text) return [];
   
   const segments: ParsedSegment[] = [];
-  const regex = /(#\w+|@\w+)/g;
+  // Enhanced regex to capture hashtags and mentions more accurately
+  const regex = /(?:^|\s)(#\w+)|(?:^|\s)(@\w+)/g;
   let lastIndex = 0;
 
-  text.replace(regex, (match, _, index) => {
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    const fullMatch = match[0];
+    const hashtag = match[1];
+    const mention = match[2];
+    const matchStart = match.index;
+    const actualStart = hashtag ? matchStart + fullMatch.indexOf('#') : matchStart + fullMatch.indexOf('@');
+    
     // Add text before the match
-    if (index > lastIndex) {
+    if (actualStart > lastIndex) {
       segments.push({
         type: 'text',
-        content: text.slice(lastIndex, index)
+        content: text.slice(lastIndex, actualStart)
       });
     }
 
     // Add the matched hashtag or mention
-    if (match.startsWith('#')) {
+    if (hashtag) {
       segments.push({
         type: 'hashtag',
-        content: match.slice(1), // Remove the #
+        content: hashtag.slice(1), // Remove the #
         isValid: true
       });
-    } else if (match.startsWith('@')) {
-      const username = match.slice(1); // Remove the @
+      lastIndex = actualStart + hashtag.length;
+    } else if (mention) {
+      const username = mention.slice(1); // Remove the @
       const userExists = availableUsers.some(user => 
         user.username && user.username.toLowerCase() === username.toLowerCase()
       );
@@ -47,11 +57,9 @@ export const parseTextWithTagsAndMentions = (text: string, availableUsers: User[
         content: username,
         isValid: userExists
       });
+      lastIndex = actualStart + mention.length;
     }
-
-    lastIndex = index + match.length;
-    return match;
-  });
+  }
 
   // Add remaining text
   if (lastIndex < text.length) {
@@ -82,4 +90,4 @@ export const createMentionClickHandler = (navigate: (path: string) => void) => {
   };
 };
 
-export type { User, ParsedSegment };
+export type { ParsedSegment };

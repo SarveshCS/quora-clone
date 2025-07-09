@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, addDoc, serverTimestamp, doc, getDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, doc, getDoc, query, getDocs } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebase/config';
+import MarkdownEditor from '../utils/MarkdownEditor';
+import { createHashtagClickHandler, createMentionClickHandler, type User } from '../utils/textUtils';
 
 const AskQuestion = () => {
   const [title, setTitle] = useState('');
@@ -10,8 +12,13 @@ const AskQuestion = () => {
   const [tags, setTags] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [availableUsers, setAvailableUsers] = useState<User[]>([]);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+
+  // Create handlers for hashtag and mention clicks
+  const handleHashtagClick = createHashtagClickHandler(navigate);
+  const handleMentionClick = createMentionClickHandler(navigate);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -19,6 +26,27 @@ const AskQuestion = () => {
       navigate('/login');
     }
   }, [currentUser, navigate]);
+
+  // Fetch available users for mention validation
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const usersQuery = query(collection(db, 'users'));
+        const usersSnap = await getDocs(usersQuery);
+        const users: User[] = usersSnap.docs.map(doc => ({
+          uid: doc.id,
+          username: doc.data().username || '',
+          displayName: doc.data().displayName || ''
+        })).filter(user => user.username); // Only include users with usernames
+        setAvailableUsers(users);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        setAvailableUsers([]);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   // Show loading while checking authentication
   if (currentUser === undefined) {
@@ -148,15 +176,18 @@ const AskQuestion = () => {
               <div>
                 <h2 className="text-lg font-medium text-gray-900">What are the details of your problem?</h2>
                 <p className="mt-1 text-sm text-gray-500">
-                  Introduce the problem and expand on what you put in the title. Minimum 20 characters.
+                  Introduce the problem and expand on what you put in the title. You can use markdown formatting, include images, links, hashtags (#), and mentions (@).
                 </p>
                 <div className="mt-2">
-                  <textarea
-                    rows={8}
-                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
-                    placeholder="Please describe your question in detail..."
+                  <MarkdownEditor
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
+                    onChange={setContent}
+                    availableUsers={availableUsers}
+                    onHashtagClick={handleHashtagClick}
+                    onMentionClick={handleMentionClick}
+                    placeholder="Please describe your question in detail... You can use **bold**, *italic*, `code`, [links](url), ![images](url), #hashtags, @mentions, and more!"
+                    minHeight="200px"
+                    maxHeight="500px"
                   />
                 </div>
               </div>
