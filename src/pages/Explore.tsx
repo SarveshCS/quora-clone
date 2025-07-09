@@ -545,19 +545,19 @@ const Explore = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-4">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Explore</h1>
-        <p className="text-gray-600 mb-4">
+    <div className="max-w-6xl mx-auto px-3 sm:px-4">
+      {/* Mobile-friendly Header */}
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Explore</h1>
+        <p className="text-sm sm:text-base text-gray-600 mb-4">
           Discover trending questions (last 10 days), recent discussions, and top contributors based on answers and community votes
         </p>
         
-        {/* Search Bar */}
-        <div className="max-w-md">
+        {/* Mobile-optimized Search Bar */}
+        <div className="max-w-full sm:max-w-md">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiSearch className="h-5 w-5 text-gray-400" />
+              <FiSearch className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
             </div>
             <input
               type="text"
@@ -565,23 +565,23 @@ const Explore = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Search questions or people..."
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full pl-9 sm:pl-10 pr-3 py-2 text-sm sm:text-base border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           <p className="text-xs text-gray-500 mt-1">Press Enter to search</p>
         </div>
       </div>
 
-      {/* Tab Navigation */}
-      <div className="border-b border-gray-200 mb-6">
-        <nav className="-mb-px flex space-x-8">
+      {/* Mobile-friendly Tab Navigation */}
+      <div className="border-b border-gray-200 mb-4 sm:mb-6">
+        <nav className="flex space-x-2 sm:space-x-8 overflow-x-auto">
           <button
             onClick={() => setActiveTab('trending')}
             className={`${
               activeTab === 'trending'
                 ? 'border-blue-500 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+            } whitespace-nowrap py-3 sm:py-4 px-3 sm:px-1 border-b-2 font-medium text-sm flex-shrink-0`}
           >
             🔥 Trending
           </button>
@@ -591,7 +591,7 @@ const Explore = () => {
               activeTab === 'recent'
                 ? 'border-blue-500 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+            } whitespace-nowrap py-3 sm:py-4 px-3 sm:px-1 border-b-2 font-medium text-sm flex-shrink-0`}
           >
             ⏰ Recent
           </button>
@@ -601,7 +601,7 @@ const Explore = () => {
               activeTab === 'users'
                 ? 'border-blue-500 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+            } whitespace-nowrap py-3 sm:py-4 px-3 sm:px-1 border-b-2 font-medium text-sm flex-shrink-0`}
           >
             👥 Contributors
           </button>
@@ -612,41 +612,41 @@ const Explore = () => {
       {activeTab === 'trending' && (
         <div>
           <div className="mb-4">
-            <h2 className="text-xl font-semibold">🔥 Trending Questions</h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <h2 className="text-lg sm:text-xl font-semibold">🔥 Trending Questions</h2>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">
               Questions with high engagement score based on votes, recency (last 10 days), and community interaction
             </p>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {trendingQuestions.length === 0 ? (
-              <div className="text-center py-12 bg-gray-50 rounded-lg">
-                <p className="text-gray-500">No trending questions yet. Be the first to ask!</p>
+              <div className="text-center py-8 sm:py-12 bg-gray-50 rounded-lg">
+                <p className="text-gray-500 text-sm sm:text-base">No trending questions yet. Be the first to ask!</p>
                 <Link
                   to="/ask"
-                  className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                  className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm sm:text-base"
                 >
                   Ask a Question
                 </Link>
               </div>
             ) : (
               trendingQuestions.map((question, index) => (
-                <div key={question.id} className="bg-white shadow-sm border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div key={question.id} className="bg-white shadow overflow-hidden border rounded-lg sm:rounded-lg p-3 sm:p-6 hover:shadow-md transition-shadow">
                   <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <span className="text-2xl font-bold text-blue-600">#{index + 1}</span>
-                        <span className="text-sm text-gray-500">•</span>
-                        <span className="text-sm text-gray-500">{question.votes} votes</span>
-                        <span className="text-sm text-gray-500">•</span>
-                        <span className="text-sm text-gray-500">{question.answers || 0} answers</span>
-                        <span className="text-sm text-gray-500">•</span>
+                    <div className="flex-1 min-w-0">
+                      {/* Mobile-stacked metadata */}
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-2 mb-2">
+                        <span className="text-lg sm:text-2xl font-bold text-blue-600">#{index + 1}</span>
+                        <span className="text-xs sm:text-sm text-gray-500">•</span>
+                        <span className="text-xs sm:text-sm text-gray-500">{question.votes} votes</span>
+                        <span className="text-xs sm:text-sm text-gray-500">•</span>
+                        <span className="text-xs sm:text-sm text-gray-500">{question.answers || 0} answers</span>
                         <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
-                          🔥 {(question.trendingScore || 0).toFixed(1)} trending
+                          🔥 {(question.trendingScore || 0).toFixed(1)}
                         </span>
                       </div>
                       <Link
                         to={`/question/${question.id}`}
-                        className="text-lg font-medium text-gray-900 hover:text-blue-600 block mb-2 whitespace-pre-wrap"
+                        className="text-base sm:text-lg font-medium text-gray-900 hover:text-blue-600 block mb-2 whitespace-pre-wrap break-words leading-tight"
                       >
                         <RenderTextWithLinks
                           text={question.title}
@@ -655,7 +655,7 @@ const Explore = () => {
                           onMentionClick={handleMentionClick}
                         />
                       </Link>
-                      <p className="text-gray-600 text-sm line-clamp-2 mb-3 whitespace-pre-wrap">
+                      <p className="text-gray-600 text-sm line-clamp-2 mb-3 whitespace-pre-wrap break-words">
                         <RenderTextWithLinks
                           text={question.content}
                           availableUsers={availableUsers}
@@ -663,16 +663,21 @@ const Explore = () => {
                           onMentionClick={handleMentionClick}
                         />
                       </p>
-                      <div className="flex items-center text-sm text-gray-500">
-                        <span>by</span>
-                        <Link
-                          to={`/@${question.username}`}
-                          className="ml-1 text-blue-600 hover:text-blue-800"
-                        >
-                          @{question.username}
-                        </Link>
-                        <span className="mx-2">•</span>
-                        <span>{formatTimeAgo(question.createdAt)}</span>
+                      {/* Mobile-stacked author info */}
+                      <div className="flex flex-col sm:flex-row sm:items-center text-xs sm:text-sm text-gray-500 space-y-1 sm:space-y-0">
+                        <div className="flex items-center">
+                          <span>by</span>
+                          <Link
+                            to={`/@${question.username}`}
+                            className="ml-1 text-blue-600 hover:text-blue-800 font-medium"
+                          >
+                            @{question.username}
+                          </Link>
+                        </div>
+                        <div className="flex items-center sm:ml-2">
+                          <span className="hidden sm:inline mx-2">•</span>
+                          <span>{formatTimeAgo(question.createdAt)}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -680,17 +685,17 @@ const Explore = () => {
               ))
             )}
             
-            {/* Load more trigger and loading indicator for trending */}
+            {/* Mobile-friendly load more for trending */}
             {(hasMoreTrending || loadingMore) && (
               <div ref={trendingLoadMoreRef} className="flex flex-col items-center py-4 space-y-3">
                 {loadingMore && activeTab === 'trending' ? (
                   <LoadingSpinner message="Loading more questions..." />
                 ) : (
                   <>
-                    <div className="text-gray-500 text-sm">Scroll down to load more questions</div>
+                    <div className="text-gray-500 text-xs sm:text-sm text-center">Scroll down to load more questions</div>
                     <button
                       onClick={loadMoreTrending}
-                      className="px-4 py-2 text-sm bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200"
+                      className="w-full sm:w-auto px-4 py-2 text-sm bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200"
                     >
                       Load More Questions
                     </button>
@@ -710,33 +715,40 @@ const Explore = () => {
 
       {activeTab === 'recent' && (
         <div>
-          <h2 className="text-xl font-semibold mb-4">⏰ Recent Questions</h2>
-          <div className="space-y-4">
+          <div className="mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold">⏰ Recent Questions</h2>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">
+              Latest questions from the community
+            </p>
+          </div>
+          <div className="space-y-3 sm:space-y-4">
             {recentQuestions.length === 0 ? (
-              <div className="text-center py-12 bg-gray-50 rounded-lg">
-                <p className="text-gray-500">No questions yet. Start the conversation!</p>
+              <div className="text-center py-8 sm:py-12 bg-gray-50 rounded-lg">
+                <p className="text-gray-500 text-sm sm:text-base">No questions yet. Start the conversation!</p>
                 <Link
                   to="/ask"
-                  className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                  className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm sm:text-base"
                 >
                   Ask a Question
                 </Link>
               </div>
             ) : (
               recentQuestions.map((question) => (
-                <div key={question.id} className="bg-white shadow-sm border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div key={question.id} className="bg-white shadow overflow-hidden border rounded-lg sm:rounded-lg p-3 sm:p-6 hover:shadow-md transition-shadow">
                   <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <span className="text-sm text-gray-500">{question.votes} votes</span>
-                        <span className="text-sm text-gray-500">•</span>
-                        <span className="text-sm text-gray-500">{question.answers || 0} answers</span>
-                        <span className="text-sm text-gray-500">•</span>
-                        <span className="text-sm text-green-600 font-medium">{formatTimeAgo(question.createdAt)}</span>
+                    <div className="flex-1 min-w-0">
+                      {/* Mobile-stacked metadata */}
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-2 mb-2">
+                        <span className="text-xs sm:text-sm text-gray-500">{question.votes} votes</span>
+                        <span className="text-xs sm:text-sm text-gray-500">•</span>
+                        <span className="text-xs sm:text-sm text-gray-500">{question.answers || 0} answers</span>
+                        <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
+                          {formatTimeAgo(question.createdAt)}
+                        </span>
                       </div>
                       <Link
                         to={`/question/${question.id}`}
-                        className="text-lg font-medium text-gray-900 hover:text-blue-600 block mb-2 whitespace-pre-wrap"
+                        className="text-base sm:text-lg font-medium text-gray-900 hover:text-blue-600 block mb-2 whitespace-pre-wrap break-words leading-tight"
                       >
                         <RenderTextWithLinks
                           text={question.title}
@@ -745,7 +757,7 @@ const Explore = () => {
                           onMentionClick={handleMentionClick}
                         />
                       </Link>
-                      <p className="text-gray-600 text-sm line-clamp-2 mb-3 whitespace-pre-wrap">
+                      <p className="text-gray-600 text-sm line-clamp-2 mb-3 whitespace-pre-wrap break-words">
                         <RenderTextWithLinks
                           text={question.content}
                           availableUsers={availableUsers}
@@ -753,14 +765,17 @@ const Explore = () => {
                           onMentionClick={handleMentionClick}
                         />
                       </p>
-                      <div className="flex items-center text-sm text-gray-500">
-                        <span>by</span>
-                        <Link
-                          to={`/@${question.username}`}
-                          className="ml-1 text-blue-600 hover:text-blue-800"
-                        >
-                          @{question.username}
-                        </Link>
+                      {/* Mobile-stacked author info */}
+                      <div className="flex flex-col sm:flex-row sm:items-center text-xs sm:text-sm text-gray-500 space-y-1 sm:space-y-0">
+                        <div className="flex items-center">
+                          <span>by</span>
+                          <Link
+                            to={`/@${question.username}`}
+                            className="ml-1 text-blue-600 hover:text-blue-800 font-medium"
+                          >
+                            @{question.username}
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -768,17 +783,17 @@ const Explore = () => {
               ))
             )}
             
-            {/* Load more trigger and loading indicator for recent */}
+            {/* Mobile-friendly load more for recent */}
             {(hasMoreRecent || loadingMore) && (
               <div ref={recentLoadMoreRef} className="flex flex-col items-center py-4 space-y-3">
                 {loadingMore && activeTab === 'recent' ? (
                   <LoadingSpinner message="Loading more questions..." />
                 ) : (
                   <>
-                    <div className="text-gray-500 text-sm">Scroll down to load more questions</div>
+                    <div className="text-gray-500 text-xs sm:text-sm text-center">Scroll down to load more questions</div>
                     <button
                       onClick={loadMoreRecent}
-                      className="px-4 py-2 text-sm bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200"
+                      className="w-full sm:w-auto px-4 py-2 text-sm bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200"
                     >
                       Load More Questions
                     </button>
@@ -798,24 +813,24 @@ const Explore = () => {
 
       {activeTab === 'users' && (
         <div>
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold">👥 Top Contributors</h2>
-            <p className="text-sm text-gray-600 mt-1">
+          <div className="mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl font-semibold">👥 Top Contributors</h2>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">
               Community members ranked by their contributions. Contributors who have answered questions: score = (Answers × 2) + (Total Votes × 0.5). 
               For new communities: score = (Questions Asked × 1) + (Question Votes × 0.3).
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
             {topUsers.length === 0 ? (
-              <div className="col-span-full text-center py-12 bg-gray-50 rounded-lg">
-                <p className="text-gray-500">No contributors yet. Join the community!</p>
+              <div className="col-span-full text-center py-8 sm:py-12 bg-gray-50 rounded-lg">
+                <p className="text-gray-500 text-sm sm:text-base">No contributors yet. Join the community!</p>
               </div>
             ) : (
               topUsers.map((user, index) => (
-                <div key={user.uid} className="bg-white shadow-sm border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow relative">
+                <div key={user.uid} className="bg-white shadow-sm border border-gray-200 rounded-lg p-4 sm:p-6 hover:shadow-md transition-shadow relative">
                   {/* Ranking badge */}
                   {index < 3 && (
-                    <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                    <div className="absolute -top-2 -right-2 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm">
                       {index === 0 && <span className="bg-yellow-500 w-full h-full rounded-full flex items-center justify-center">🥇</span>}
                       {index === 1 && <span className="bg-gray-400 w-full h-full rounded-full flex items-center justify-center">🥈</span>}
                       {index === 2 && <span className="bg-amber-600 w-full h-full rounded-full flex items-center justify-center">🥉</span>}
@@ -823,56 +838,56 @@ const Explore = () => {
                   )}
                   
                   <div className="text-center">
-                    <div className="h-20 w-20 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl text-white font-bold">
+                    <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                      <span className="text-lg sm:text-2xl text-white font-bold">
                         {user.displayName?.charAt(0).toUpperCase() || user.username?.charAt(0).toUpperCase() || '?'}
                       </span>
                     </div>
                     
-                    <h3 className="font-semibold text-gray-900 text-lg mb-1">
+                    <h3 className="font-semibold text-gray-900 text-base sm:text-lg mb-1 truncate">
                       {user.displayName || 'Anonymous User'}
                     </h3>
                     
                     <Link
                       to={`/@${user.username}`}
-                      className="text-sm text-blue-600 hover:text-blue-800 mb-3 block"
+                      className="text-xs sm:text-sm text-blue-600 hover:text-blue-800 mb-3 block truncate"
                     >
                       @{user.username}
                     </Link>
 
                     {/* Contributor Stats */}
-                    <div className="space-y-2 mb-4">
+                    <div className="space-y-2 mb-3 sm:mb-4">
                       {(user.questionsAnswered || 0) > 0 ? (
                         <>
-                          <div className="flex items-center justify-between text-sm">
+                          <div className="flex items-center justify-between text-xs sm:text-sm">
                             <span className="text-gray-600">Questions Answered:</span>
                             <span className="font-semibold text-blue-600">{user.questionsAnswered || 0}</span>
                           </div>
-                          <div className="flex items-center justify-between text-sm">
+                          <div className="flex items-center justify-between text-xs sm:text-sm">
                             <span className="text-gray-600">Total Votes:</span>
                             <span className="font-semibold text-green-600">{user.totalVotes || 0}</span>
                           </div>
                         </>
                       ) : (
                         <>
-                          <div className="flex items-center justify-between text-sm">
+                          <div className="flex items-center justify-between text-xs sm:text-sm">
                             <span className="text-gray-600">Questions Asked:</span>
                             <span className="font-semibold text-blue-600">{user.questionsAsked || 0}</span>
                           </div>
-                          <div className="flex items-center justify-between text-sm">
+                          <div className="flex items-center justify-between text-xs sm:text-sm">
                             <span className="text-gray-600">Question Votes:</span>
                             <span className="font-semibold text-green-600">{user.totalVotes || 0}</span>
                           </div>
                         </>
                       )}
-                      <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center justify-between text-xs sm:text-sm">
                         <span className="text-gray-600">Contributor Score:</span>
                         <span className="font-bold text-purple-600">{(user.contributorScore || 0).toFixed(1)}</span>
                       </div>
                     </div>
 
                     {/* Progress bar for contributor score */}
-                    <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
+                    <div className="w-full bg-gray-200 rounded-full h-2 mb-3 sm:mb-4">
                       <div 
                         className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
                         style={{ 
@@ -883,7 +898,7 @@ const Explore = () => {
                     
                     <Link
                       to={`/@${user.username}`}
-                      className="inline-block text-xs bg-blue-50 text-blue-600 px-4 py-2 rounded-full hover:bg-blue-100 transition-colors font-medium"
+                      className="inline-block text-xs bg-blue-50 text-blue-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:bg-blue-100 transition-colors font-medium"
                     >
                       View Profile
                     </Link>

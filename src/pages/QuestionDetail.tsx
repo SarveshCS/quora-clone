@@ -461,16 +461,16 @@ const QuestionDetail = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-4xl mx-auto px-3 sm:px-0">
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-3 sm:px-4 py-3 rounded mb-4 text-sm sm:text-base">
           {error}
         </div>
       )}
       
       {/* Question */}
-      <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
-        <h1 className="text-2xl font-bold mb-4 whitespace-pre-wrap">
+      <div className="bg-white shadow overflow-hidden rounded-lg sm:rounded-lg p-3 sm:p-6 mb-4 sm:mb-6 border sm:border-0">
+        <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 whitespace-pre-wrap break-words leading-tight">
           <RenderTextWithLinks 
             text={question.title}
             availableUsers={availableUsers}
@@ -480,32 +480,49 @@ const QuestionDetail = () => {
           />
         </h1>
         
-        <div className="flex items-start mb-4">
-          <div className="flex flex-col items-center mr-4">
+        <div className="flex items-start mb-3 sm:mb-4">
+          {/* Mobile-optimized voting section */}
+          <div className="flex flex-col items-center mr-3 sm:mr-4 flex-shrink-0">
             <button 
               onClick={() => handleVote('question', question.id, 'up')}
-              className={`p-1 rounded hover:bg-gray-100 ${question.userVotes?.[currentUser?.uid || ''] === 'up' ? 'text-blue-600' : 'text-gray-500'}`}
+              className={`p-1.5 sm:p-1 rounded-full sm:rounded hover:bg-gray-100 transition-colors ${
+                !currentUser 
+                  ? 'text-gray-300 cursor-not-allowed' 
+                  : question.userVotes?.[currentUser?.uid || ''] === 'up' 
+                    ? 'text-blue-600 bg-blue-50' 
+                    : 'text-gray-500'
+              }`}
+              title={!currentUser ? "Login to vote" : "Upvote"}
+              disabled={!currentUser}
             >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
               </svg>
             </button>
             
-            <span className="text-lg font-semibold my-1">
+            <span className="text-base sm:text-lg font-semibold my-1 px-2 py-1 bg-gray-50 rounded text-center min-w-[2rem]">
               {question.votes || 0}
             </span>
             
             <button 
               onClick={() => handleVote('question', question.id, 'down')}
-              className={`p-1 rounded hover:bg-gray-100 ${question.userVotes?.[currentUser?.uid || ''] === 'down' ? 'text-red-600' : 'text-gray-500'}`}
+              className={`p-1.5 sm:p-1 rounded-full sm:rounded hover:bg-gray-100 transition-colors ${
+                !currentUser 
+                  ? 'text-gray-300 cursor-not-allowed' 
+                  : question.userVotes?.[currentUser?.uid || ''] === 'down' 
+                    ? 'text-red-600 bg-red-50' 
+                    : 'text-gray-500'
+              }`}
+              title={!currentUser ? "Login to vote" : "Downvote"}
+              disabled={!currentUser}
             >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </button>
           </div>
           
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             {editQuestionMode ? (
               <div className="mb-4">
                 <MarkdownEditor
@@ -518,14 +535,14 @@ const QuestionDetail = () => {
                   minHeight="150px"
                   maxHeight="400px"
                 />
-                <div className="flex gap-2 mt-2">
-                  <button className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700" onClick={handleSaveQuestionEdit}>Save</button>
-                  <button className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400" onClick={() => setEditQuestionMode(false)}>Cancel</button>
+                <div className="flex flex-col sm:flex-row gap-2 mt-3">
+                  <button className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition-colors" onClick={handleSaveQuestionEdit}>Save Changes</button>
+                  <button className="w-full sm:w-auto bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm hover:bg-gray-400 transition-colors" onClick={() => setEditQuestionMode(false)}>Cancel</button>
                 </div>
               </div>
             ) : (
               <>
-                <div className="prose max-w-none mb-4 whitespace-pre-wrap">
+                <div className="prose max-w-none mb-3 sm:mb-4 whitespace-pre-wrap break-words text-sm sm:text-base">
                   <RenderTextWithLinks 
                     text={question.content}
                     availableUsers={availableUsers}
@@ -535,12 +552,13 @@ const QuestionDetail = () => {
                   />
                 </div>
                 
-                <div className="flex flex-wrap gap-2 mb-4">
+                {/* Mobile-friendly tags */}
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                   {question.tags?.map((tag, index) => (
                     <Link 
                       key={index} 
                       to={`/search?q=${encodeURIComponent(tag)}&type=questions&searchBy=tags`}
-                      className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                      className="text-xs sm:text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
                       title={`Search all questions tagged with "${tag}"`}
                     >
                       #{tag}
@@ -548,38 +566,41 @@ const QuestionDetail = () => {
                   ))}
                 </div>
                 
-                <div className="flex justify-between items-center text-sm text-gray-500">
+                {/* Mobile-stacked metadata */}
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs sm:text-sm text-gray-500 space-y-2 sm:space-y-0">
                   <div className="flex items-center">
                     <span>Asked {formatDistanceToNow(new Date(question.createdAt.seconds * 1000))} ago</span>
                   </div>
                   
-                  <div className="bg-blue-50 px-3 py-1 rounded flex items-center">
+                  <div className="bg-blue-50 px-2 sm:px-3 py-1 rounded flex items-center">
                     <img 
                       src={`https://ui-avatars.com/api/?name=${encodeURIComponent(question.author)}`} 
                       alt={question.author}
-                      className="w-6 h-6 rounded-full mr-2"
+                      className="w-4 h-4 sm:w-6 sm:h-6 rounded-full mr-2"
                     />
-                    <Link to={`/@${question.username}`} className="text-blue-600 hover:underline">
+                    <Link to={`/@${question.username}`} className="text-blue-600 hover:underline font-medium">
                       @{question.username || 'unknown'}
                     </Link>
                   </div>
                 </div>
                 
                 {currentUser?.uid === question.authorId && (
-                  <div className="flex gap-2 mt-4">
+                  <div className="flex gap-3 mt-3 pt-2 border-t border-gray-100">
                     <button 
                       onClick={handleEditQuestion}
-                      className="text-gray-400 hover:text-gray-500"
+                      className="flex items-center gap-1 text-gray-500 hover:text-gray-700 text-sm transition-colors"
                       title="Edit question"
                     >
-                      <FiEdit className="h-5 w-5" aria-hidden="true" />
+                      <FiEdit className="h-4 w-4" />
+                      <span className="hidden sm:inline">Edit</span>
                     </button>
                     <button 
                       onClick={() => setDeleteConfirm({ type: 'question', id: question.id })}
-                      className="text-red-600 hover:text-red-700"
+                      className="flex items-center gap-1 text-red-500 hover:text-red-700 text-sm transition-colors"
                       title="Delete question"
                     >
-                      <FiTrash2 className="h-5 w-5" aria-hidden="true" />
+                      <FiTrash2 className="h-4 w-4" />
+                      <span className="hidden sm:inline">Delete</span>
                     </button>
                   </div>
                 )}
@@ -589,70 +610,93 @@ const QuestionDetail = () => {
         </div>
       </div>
       
-      {/* Delete Question Confirmation */}
+      {/* Mobile-friendly Delete Question Confirmation */}
       {deleteConfirm?.type === 'question' && deleteConfirm.id === question.id && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-          <div className="bg-white p-6 rounded shadow-lg">
-            <p className="mb-4">Are you sure you want to delete this question? This cannot be undone.</p>
-            <div className="flex gap-2">
-              <button className="bg-red-600 text-white px-4 py-2 rounded" onClick={handleDeleteQuestion}>Delete</button>
-              <button className="bg-gray-300 px-4 py-2 rounded" onClick={() => setDeleteConfirm(null)}>Cancel</button>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h3 className="text-lg font-medium text-gray-900 mb-3">Delete Question</h3>
+            <p className="text-sm text-gray-500 mb-4">Are you sure you want to delete this question? This cannot be undone.</p>
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-2">
+              <button className="w-full sm:w-auto bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-700 transition-colors" onClick={handleDeleteQuestion}>Delete</button>
+              <button className="w-full sm:w-auto bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-400 transition-colors" onClick={() => setDeleteConfirm(null)}>Cancel</button>
             </div>
           </div>
         </div>
       )}
       
       {/* Answers */}
-      <div className="mb-8">
-        <h2 className="text-xl font-semibold mb-4">{answers.length} {answers.length === 1 ? 'Answer' : 'Answers'}</h2>
+      <div className="mb-6 sm:mb-8">
+        <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{answers.length} {answers.length === 1 ? 'Answer' : 'Answers'}</h2>
         
         {answers.length === 0 ? (
-          <p className="text-gray-500 italic">No answers yet. Be the first to answer!</p>
+          <p className="text-gray-500 italic text-sm sm:text-base">No answers yet. Be the first to answer!</p>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {answers.map(answer => (
-              <div key={answer.id} className={`border rounded-lg p-4 ${answer.isAccepted ? 'border-green-500 bg-green-50' : 'border-gray-200'}`}>
+              <div key={answer.id} className={`border rounded-lg p-3 sm:p-4 ${answer.isAccepted ? 'border-green-500 bg-green-50' : 'border-gray-200'}`}>
                 <div className="flex items-start">
-                  <div className="flex flex-col items-center mr-4">
+                  {/* Mobile-optimized voting section for answers */}
+                  <div className="flex flex-col items-center mr-3 sm:mr-4 flex-shrink-0">
                     <button 
                       onClick={() => handleVote('answer', answer.id, 'up')}
-                      className={`p-1 rounded hover:bg-gray-100 ${answer.userVotes?.[currentUser?.uid || ''] === 'up' ? 'text-blue-600' : 'text-gray-500'}`}
+                      className={`p-1.5 sm:p-1 rounded-full sm:rounded hover:bg-gray-100 transition-colors ${
+                        !currentUser 
+                          ? 'text-gray-300 cursor-not-allowed' 
+                          : answer.userVotes?.[currentUser?.uid || ''] === 'up' 
+                            ? 'text-blue-600 bg-blue-50' 
+                            : 'text-gray-500'
+                      }`}
+                      title={!currentUser ? "Login to vote" : "Upvote"}
+                      disabled={!currentUser}
                     >
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
                       </svg>
                     </button>
                     
-                    <span className="text-lg font-semibold my-1">
+                    <span className="text-base sm:text-lg font-semibold my-1 px-2 py-1 bg-gray-50 rounded text-center min-w-[2rem]">
                       {answer.votes || 0}
                     </span>
                     
                     <button 
                       onClick={() => handleVote('answer', answer.id, 'down')}
-                      className={`p-1 rounded hover:bg-gray-100 ${answer.userVotes?.[currentUser?.uid || ''] === 'down' ? 'text-red-600' : 'text-gray-500'}`}
+                      className={`p-1.5 sm:p-1 rounded-full sm:rounded hover:bg-gray-100 transition-colors ${
+                        !currentUser 
+                          ? 'text-gray-300 cursor-not-allowed' 
+                          : answer.userVotes?.[currentUser?.uid || ''] === 'down' 
+                            ? 'text-red-600 bg-red-50' 
+                            : 'text-gray-500'
+                      }`}
+                      title={!currentUser ? "Login to vote" : "Downvote"}
+                      disabled={!currentUser}
                     >
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                       </svg>
                     </button>
                     
+                    {/* Accept answer button for question author */}
                     {currentUser?.uid === question.authorId && (
                       <button 
                         onClick={() => handleAcceptAnswer(answer.id)}
-                        className={`mt-2 p-1 rounded ${answer.isAccepted ? 'text-green-600' : 'text-gray-400 hover:text-green-600'}`}
+                        className={`mt-2 p-1.5 sm:p-1 rounded-full sm:rounded transition-colors ${
+                          answer.isAccepted 
+                            ? 'text-green-600 bg-green-50' 
+                            : 'text-gray-400 hover:text-green-600 hover:bg-green-50'
+                        }`}
                         title={answer.isAccepted ? 'Accepted answer' : 'Mark as accepted answer'}
                       >
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
                       </button>
                     )}
                   </div>
                   
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     {answer.isAccepted && (
-                      <div className="text-green-600 text-sm font-medium mb-2 flex items-center">
-                        <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <div className="text-green-600 text-xs sm:text-sm font-medium mb-2 flex items-center">
+                        <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
                         Accepted Answer
@@ -671,14 +715,14 @@ const QuestionDetail = () => {
                           minHeight="150px"
                           maxHeight="400px"
                         />
-                        <div className="flex gap-2 mt-2">
-                          <button className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700" onClick={() => handleSaveAnswerEdit(answer.id)}>Save</button>
-                          <button className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400" onClick={() => setEditAnswerId(null)}>Cancel</button>
+                        <div className="flex flex-col sm:flex-row gap-2 mt-3">
+                          <button className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition-colors" onClick={() => handleSaveAnswerEdit(answer.id)}>Save Changes</button>
+                          <button className="w-full sm:w-auto bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm hover:bg-gray-400 transition-colors" onClick={() => setEditAnswerId(null)}>Cancel</button>
                         </div>
                       </div>
                     ) : (
                       <>
-                        <div className="prose max-w-none mb-4 whitespace-pre-wrap">
+                        <div className="prose max-w-none mb-3 sm:mb-4 whitespace-pre-wrap break-words text-sm sm:text-base">
                           <RenderTextWithLinks 
                             text={answer.content}
                             availableUsers={availableUsers}
@@ -688,38 +732,41 @@ const QuestionDetail = () => {
                           />
                         </div>
                         
-                        <div className="flex justify-between items-center text-sm text-gray-500">
+                        {/* Mobile-stacked answer metadata */}
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs sm:text-sm text-gray-500 space-y-2 sm:space-y-0">
                           <div className="flex items-center">
                             <span>Answered {formatDistanceToNow(new Date(answer.createdAt.seconds * 1000))} ago</span>
                           </div>
                           
-                          <div className="bg-blue-50 px-3 py-1 rounded flex items-center">
+                          <div className="bg-blue-50 px-2 sm:px-3 py-1 rounded flex items-center">
                             <img 
                               src={`https://ui-avatars.com/api/?name=${encodeURIComponent(answer.author)}`} 
                               alt={answer.author}
-                              className="w-6 h-6 rounded-full mr-2"
+                              className="w-4 h-4 sm:w-6 sm:h-6 rounded-full mr-2"
                             />
-                            <Link to={`/@${answer.username}`} className="text-blue-600 hover:underline">
+                            <Link to={`/@${answer.username}`} className="text-blue-600 hover:underline font-medium">
                               @{answer.username || 'unknown'}
                             </Link>
                           </div>
                         </div>
                         
                         {currentUser?.uid === answer.userId && (
-                          <div className="flex gap-2 mt-4">
+                          <div className="flex gap-3 mt-3 pt-2 border-t border-gray-100">
                             <button 
                               onClick={() => handleEditAnswer(answer)}
-                              className="text-gray-400 hover:text-gray-500"
+                              className="flex items-center gap-1 text-gray-500 hover:text-gray-700 text-sm transition-colors"
                               title="Edit answer"
                             >
-                              <FiEdit className="h-5 w-5" aria-hidden="true" />
+                              <FiEdit className="h-4 w-4" />
+                              <span className="hidden sm:inline">Edit</span>
                             </button>
                             <button 
                               onClick={() => setDeleteConfirm({ type: 'answer', id: answer.id })}
-                              className="text-red-600 hover:text-red-700"
+                              className="flex items-center gap-1 text-red-500 hover:text-red-700 text-sm transition-colors"
                               title="Delete answer"
                             >
-                              <FiTrash2 className="h-5 w-5" aria-hidden="true" />
+                              <FiTrash2 className="h-4 w-4" />
+                              <span className="hidden sm:inline">Delete</span>
                             </button>
                           </div>
                         )}
@@ -733,13 +780,15 @@ const QuestionDetail = () => {
         )}
       </div>
       
-      {/* Answer Form */}
-      <div className="bg-white shadow-sm rounded-lg p-6">
-        <h2 className="text-xl font-semibold mb-4">Your Answer</h2>
+      {/* Mobile-friendly Answer Form */}
+      <div className="bg-white shadow overflow-hidden rounded-lg sm:rounded-lg p-3 sm:p-6 border sm:border-0">
+        <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Your Answer</h2>
         
         {!currentUser ? (
           <div className="text-center py-4">
-            <p className="mb-4">Please <Link to="/login" className="text-blue-600 hover:underline">login</Link> to post an answer.</p>
+            <p className="mb-4 text-sm sm:text-base">
+              Please <Link to="/login" className="text-blue-600 hover:underline font-medium">login</Link> to post an answer.
+            </p>
           </div>
         ) : (
           <form onSubmit={handleAnswerSubmit}>
@@ -762,8 +811,8 @@ const QuestionDetail = () => {
             <div className="flex justify-end">
               <button
                 type="submit"
-                disabled={submitting}
-                className="px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={submitting || !answerContent.trim()}
+                className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm sm:text-base"
               >
                 {submitting ? 'Posting...' : 'Post Your Answer'}
               </button>
@@ -772,14 +821,15 @@ const QuestionDetail = () => {
         )}
       </div>
       
-      {/* Delete Answer Confirmation */}
+      {/* Mobile-friendly Delete Answer Confirmation */}
       {deleteConfirm?.type === 'answer' && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-          <div className="bg-white p-6 rounded shadow-lg">
-            <p className="mb-4">Are you sure you want to delete this answer? This cannot be undone.</p>
-            <div className="flex gap-2">
-              <button className="bg-red-600 text-white px-4 py-2 rounded" onClick={() => handleDeleteAnswer(deleteConfirm.id)}>Delete</button>
-              <button className="bg-gray-300 px-4 py-2 rounded" onClick={() => setDeleteConfirm(null)}>Cancel</button>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h3 className="text-lg font-medium text-gray-900 mb-3">Delete Answer</h3>
+            <p className="text-sm text-gray-500 mb-4">Are you sure you want to delete this answer? This cannot be undone.</p>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <button className="w-full sm:w-auto bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-700 transition-colors" onClick={() => handleDeleteAnswer(deleteConfirm.id)}>Delete</button>
+              <button className="w-full sm:w-auto bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-400 transition-colors" onClick={() => setDeleteConfirm(null)}>Cancel</button>
             </div>
           </div>
         </div>

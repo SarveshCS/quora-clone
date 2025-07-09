@@ -511,141 +511,141 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
   return (
     <div className={`border border-gray-300 rounded-lg overflow-hidden ${className}`}>
       {/* Toolbar */}
-      <div className="bg-gray-50 border-b border-gray-200 px-3 py-2">
+      <div className="bg-gray-50 border-b border-gray-200 px-2 sm:px-3 py-2">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 sm:space-x-2 overflow-x-auto scrollbar-thin">
             {/* Undo/Redo */}
             <button
               type="button"
               onClick={undo}
               disabled={historyIndex === 0}
-              className="p-1 rounded hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
               title="Undo (Ctrl+Z)"
             >
-              <FiRotateCcw size={16} />
+              <FiRotateCcw size={14} className="sm:w-4 sm:h-4" />
             </button>
             <button
               type="button"
               onClick={redo}
               disabled={historyIndex === history.length - 1}
-              className="p-1 rounded hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
               title="Redo (Ctrl+Y)"
             >
-              <FiRotateCw size={16} />
+              <FiRotateCw size={14} className="sm:w-4 sm:h-4" />
             </button>
             
-            <div className="w-px h-4 bg-gray-300 mx-2" />
+            <div className="w-px h-3 sm:h-4 bg-gray-300 mx-1 sm:mx-2 flex-shrink-0" />
             
             {/* Text formatting */}
             <button
               type="button"
               onClick={toolbarActions.bold}
-              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
               title="Bold (Ctrl+B)"
             >
-              <FiBold size={16} />
+              <FiBold size={14} className="sm:w-4 sm:h-4" />
             </button>
             <button
               type="button"
               onClick={toolbarActions.italic}
-              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
               title="Italic (Ctrl+I)"
             >
-              <FiItalic size={16} />
+              <FiItalic size={14} className="sm:w-4 sm:h-4" />
             </button>
             <button
               type="button"
               onClick={toolbarActions.code}
-              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
               title="Inline Code (Ctrl+`)"
             >
-              <FiCode size={16} />
+              <FiCode size={14} className="sm:w-4 sm:h-4" />
             </button>
             <button
               type="button"
               onClick={toolbarActions.strikethrough}
-              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
               title="Strikethrough"
             >
-              <FiType size={16} />
+              <FiType size={14} className="sm:w-4 sm:h-4" />
             </button>
             
-            <div className="w-px h-4 bg-gray-300 mx-2" />
+            <div className="w-px h-3 sm:h-4 bg-gray-300 mx-1 sm:mx-2 flex-shrink-0" />
             
             {/* Links and media */}
             <button
               type="button"
               onClick={toolbarActions.link}
-              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
               title="Link (Ctrl+K)"
             >
-              <FiLink size={16} />
+              <FiLink size={14} className="sm:w-4 sm:h-4" />
             </button>
             <button
               type="button"
               onClick={toolbarActions.image}
-              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
               title="Image"
             >
-              <FiImage size={16} />
+              <FiImage size={14} className="sm:w-4 sm:h-4" />
             </button>
             
-            <div className="w-px h-4 bg-gray-300 mx-2" />
+            <div className="w-px h-3 sm:h-4 bg-gray-300 mx-1 sm:mx-2 flex-shrink-0" />
             
             {/* Structure */}
             <button
               type="button"
               onClick={toolbarActions.heading}
-              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
               title="Heading"
             >
-              <FiHash size={16} />
+              <FiHash size={14} className="sm:w-4 sm:h-4" />
             </button>
             <button
               type="button"
               onClick={toolbarActions.list}
-              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
               title="Bulleted List"
             >
-              <FiList size={16} />
+              <FiList size={14} className="sm:w-4 sm:h-4" />
             </button>
             <button
               type="button"
               onClick={toolbarActions.orderedList}
-              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
               title="Numbered List"
             >
-              <span className="text-sm font-mono">1.</span>
+              <span className="text-xs sm:text-sm font-mono">1.</span>
             </button>
             
-            <div className="w-px h-4 bg-gray-300 mx-2" />
+            <div className="w-px h-3 sm:h-4 bg-gray-300 mx-1 sm:mx-2 flex-shrink-0" />
             
             {/* Quote and divider */}
             <button
               type="button"
               onClick={toolbarActions.quote}
-              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
               title="Quote"
             >
-              <FiMessageSquare size={16} />
+              <FiMessageSquare size={14} className="sm:w-4 sm:h-4" />
             </button>
             <button
               type="button"
               onClick={toolbarActions.divider}
-              className="p-1 rounded hover:bg-gray-200 transition-colors"
+              className="p-1.5 sm:p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
               title="Horizontal Rule"
             >
-              <FiMinus size={16} />
+              <FiMinus size={14} className="sm:w-4 sm:h-4" />
             </button>
           </div>
           
           {/* Preview toggle */}
           {showPreview && (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 ml-2 flex-shrink-0">
               <button
                 type="button"
                 onClick={() => setIsPreviewMode(!isPreviewMode)}
-                className={`flex items-center space-x-1 px-2 py-1 rounded text-sm transition-colors ${
+                className={`flex items-center space-x-1 px-2 py-1 rounded text-xs sm:text-sm transition-colors ${
                   isPreviewMode 
                     ? 'bg-blue-100 text-blue-700' 
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -653,13 +653,13 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
               >
                 {isPreviewMode ? (
                   <>
-                    <FiEdit3 size={14} />
-                    <span>Edit</span>
+                    <FiEdit3 size={12} className="sm:w-3.5 sm:h-3.5" />
+                    <span className="hidden sm:inline">Edit</span>
                   </>
                 ) : (
                   <>
-                    <FiEye size={14} />
-                    <span>Preview</span>
+                    <FiEye size={12} className="sm:w-3.5 sm:h-3.5" />
+                    <span className="hidden sm:inline">Preview</span>
                   </>
                 )}
               </button>
@@ -713,23 +713,23 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
       </div>
 
       {/* Helper text */}
-      <div className="bg-gray-50 border-t border-gray-200 px-3 py-2 text-xs text-gray-600">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-4">
-            <span>Supports markdown:</span>
-            <span className="font-mono">**bold**</span>
-            <span className="font-mono">*italic*</span>
-            <span className="font-mono">~~strikethrough~~</span>
-            <span className="font-mono">`code`</span>
-            <span className="font-mono">[links](url)</span>
-            <span className="font-mono">![images](url)</span>
-            <span className="font-mono">#hashtags</span>
-            <span className="font-mono">@mentions</span>
+      <div className="bg-gray-50 border-t border-gray-200 px-2 sm:px-3 py-2 text-xs text-gray-600">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+            <span className="font-medium">Supports markdown:</span>
+            <div className="flex flex-wrap gap-2 sm:gap-3">
+              <span className="font-mono bg-gray-100 px-1 rounded">**bold**</span>
+              <span className="font-mono bg-gray-100 px-1 rounded">*italic*</span>
+              <span className="font-mono bg-gray-100 px-1 rounded">`code`</span>
+              <span className="font-mono bg-gray-100 px-1 rounded">[links](url)</span>
+              <span className="font-mono bg-gray-100 px-1 rounded">#hashtags</span>
+              <span className="font-mono bg-gray-100 px-1 rounded">@mentions</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-gray-500">
+          <div className="flex items-center gap-2 text-gray-500 text-xs">
             <span>Height: {currentHeight}px</span>
-            <span>•</span>
-            <span>Range: {minHeight} - {maxHeight}</span>
+            <span className="hidden sm:inline">•</span>
+            <span className="hidden sm:inline">Range: {minHeight} - {maxHeight}</span>
           </div>
         </div>
       </div>

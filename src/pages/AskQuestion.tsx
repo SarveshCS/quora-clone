@@ -60,8 +60,8 @@ const AskQuestion = () => {
   // Redirect if not authenticated (this shouldn't be reached due to useEffect, but just in case)
   if (!currentUser) {
     return (
-      <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+      <div className="max-w-4xl mx-auto py-4 sm:py-8 px-3 sm:px-4 lg:px-8">
+        <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-3 sm:px-4 py-3 rounded text-sm sm:text-base">
           <span className="block sm:inline">Please log in to ask a question.</span>
         </div>
       </div>
@@ -142,30 +142,30 @@ const AskQuestion = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Ask a public question</h1>
+    <div className="max-w-4xl mx-auto py-4 sm:py-8 px-3 sm:px-4 lg:px-8">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Ask a public question</h1>
       </div>
       
       {error && (
-        <div className="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <div className="mb-4 sm:mb-6 bg-red-100 border border-red-400 text-red-700 px-3 sm:px-4 py-3 rounded relative text-sm sm:text-base" role="alert">
           <span className="block sm:inline">{error}</span>
         </div>
       )}
       
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-white shadow sm:rounded-lg">
-          <div className="px-4 py-5 sm:p-6">
-            <div className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+        <div className="bg-white shadow rounded-lg sm:rounded-lg">
+          <div className="px-3 py-4 sm:px-4 sm:py-5 lg:p-6">
+            <div className="space-y-4 sm:space-y-6">
               <div>
-                <h2 className="text-lg font-medium text-gray-900">Title</h2>
-                <p className="mt-1 text-sm text-gray-500">
+                <h2 className="text-base sm:text-lg font-medium text-gray-900">Title</h2>
+                <p className="mt-1 text-xs sm:text-sm text-gray-500">
                   Be specific and imagine you're asking a question to another person
                 </p>
                 <div className="mt-2">
                   <input
                     type="text"
-                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full text-sm sm:text-sm border-gray-300 rounded-md py-2 px-3"
                     placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
@@ -174,8 +174,8 @@ const AskQuestion = () => {
               </div>
 
               <div>
-                <h2 className="text-lg font-medium text-gray-900">What are the details of your problem?</h2>
-                <p className="mt-1 text-sm text-gray-500">
+                <h2 className="text-base sm:text-lg font-medium text-gray-900">What are the details of your problem?</h2>
+                <p className="mt-1 text-xs sm:text-sm text-gray-500">
                   Introduce the problem and expand on what you put in the title. You can use markdown formatting, include images, links, hashtags (#), and mentions (@).
                 </p>
                 <div className="mt-2">
@@ -193,14 +193,14 @@ const AskQuestion = () => {
               </div>
 
               <div>
-                <h2 className="text-lg font-medium text-gray-900">Tags</h2>
-                <p className="mt-1 text-sm text-gray-500">
+                <h2 className="text-base sm:text-lg font-medium text-gray-900">Tags</h2>
+                <p className="mt-1 text-xs sm:text-sm text-gray-500">
                   Add up to 5 tags to describe what your question is about (comma-separated)
                 </p>
                 <div className="mt-2">
                   <input
                     type="text"
-                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full text-sm sm:text-sm border-gray-300 rounded-md py-2 px-3"
                     placeholder="e.g. javascript, react, typescript"
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
@@ -209,11 +209,11 @@ const AskQuestion = () => {
               </div>
             </div>
 
-            <div className="mt-8 flex justify-end">
+            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:justify-end space-y-3 sm:space-y-0">
               <button
                 type="submit"
                 disabled={loading}
-                className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                className="w-full sm:w-auto sm:ml-3 inline-flex justify-center py-2.5 sm:py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Posting...' : 'Post Your Question'}
               </button>

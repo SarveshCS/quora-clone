@@ -268,7 +268,7 @@ const UserProfile = () => {
     return <div className="flex justify-center items-center h-64"><LoadingSpinner message="Loading profile..." /></div>;
   }
   if (error) {
-    return <div className="max-w-4xl mx-auto p-4"><div className="text-red-600 bg-red-100 border border-red-400 px-4 py-3 rounded">{error}</div></div>;
+    return <div className="max-w-4xl mx-auto"><div className="text-red-600 bg-red-100 border border-red-400 px-4 py-3 rounded">{error}</div></div>;
   }
   if (!user) return null;
 
@@ -276,87 +276,98 @@ const UserProfile = () => {
   const isOwner = currentUser && user && currentUser.uid === user.uid;
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-8 border border-gray-200">
-        <div className="px-4 py-5 sm:px-6">
-          <div className="flex items-center">
-            <div className="h-20 w-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-              {currentUser?.photoURL && isOwner ? (
-                <img 
-                  src={currentUser.photoURL} 
-                  alt={user.displayName || 'User'} 
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <span className="text-2xl text-gray-500">
-                  {user.displayName?.charAt(0).toUpperCase() || user.username?.charAt(0).toUpperCase() || '?'}
-                </span>
-              )}
+    <div className="max-w-4xl mx-auto px-3 sm:px-0">
+      {/* Mobile-friendly profile header */}
+      <div className="bg-white shadow overflow-hidden rounded-lg sm:rounded-lg mb-4 sm:mb-6 lg:mb-8 border sm:border-0">
+        <div className="px-4 py-4 sm:px-6 sm:py-5">
+          <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+            {/* Profile image */}
+            <div className="flex justify-center sm:justify-start">
+              <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden flex-shrink-0">
+                {currentUser?.photoURL && isOwner ? (
+                  <img 
+                    src={currentUser.photoURL} 
+                    alt={user.displayName || 'User'} 
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="text-xl sm:text-2xl text-gray-500">
+                    {user.displayName?.charAt(0).toUpperCase() || user.username?.charAt(0).toUpperCase() || '?'}
+                  </span>
+                )}
+              </div>
             </div>
-            <div className="ml-6">
+            
+            {/* Profile info */}
+            <div className="flex-1 text-center sm:text-left">
               {editMode && isOwner ? (
-                <form onSubmit={handleProfileUpdate} className="space-y-2">
+                <form onSubmit={handleProfileUpdate} className="space-y-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Display Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Display Name</label>
                     <input
                       type="text"
                       value={displayName}
                       onChange={e => setDisplayName(e.target.value)}
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                      className="w-full border border-gray-300 rounded-md shadow-sm p-3 sm:p-2 text-sm"
                       disabled={profileLoading}
                       maxLength={30}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Username</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
                     <input
                       type="text"
                       value={username}
                       onChange={e => setUsername(e.target.value)}
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                      className="w-full border border-gray-300 rounded-md shadow-sm p-3 sm:p-2 text-sm"
                       disabled={profileLoading}
                       maxLength={20}
                     />
-                    <p className="text-xs text-gray-500">Unique, 3-20 characters, letters, numbers, or underscores. Used in URLs.</p>
+                    <p className="text-xs text-gray-500 mt-1">Unique, 3-20 characters, letters, numbers, or underscores. Used in URLs.</p>
                   </div>
-                  {profileError && <div className="text-red-600 text-sm">{profileError}</div>}
-                  {profileSuccess && <div className="text-green-600 text-sm">{profileSuccess}</div>}
-                  <div className="flex space-x-2">
-                    <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded" disabled={profileLoading}>Save</button>
-                    <button type="button" className="bg-gray-300 text-gray-700 px-4 py-2 rounded" onClick={() => setEditMode(false)} disabled={profileLoading}>Cancel</button>
+                  {profileError && <div className="text-red-600 text-sm bg-red-50 p-2 rounded">{profileError}</div>}
+                  {profileSuccess && <div className="text-green-600 text-sm bg-green-50 p-2 rounded">{profileSuccess}</div>}
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <button 
+                      type="submit" 
+                      className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors" 
+                      disabled={profileLoading}
+                    >
+                      {profileLoading ? 'Saving...' : 'Save Changes'}
+                    </button>
+                    <button 
+                      type="button" 
+                      className="w-full sm:w-auto bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-400 transition-colors" 
+                      onClick={() => setEditMode(false)} 
+                      disabled={profileLoading}
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </form>
               ) : (
                 <>
-                  <h1 className="text-2xl font-bold text-gray-900">{user.displayName || 'Anonymous User'}</h1>
-                  <p className="text-gray-600">@{user.username}</p>
-                  {isOwner && currentUser && (
-                    <>
-                      <p className="mt-2 text-sm text-gray-500">
-                        Member since {user.createdAt ? 
-                          (user.createdAt && typeof user.createdAt === 'object' && 'seconds' in user.createdAt ? 
-                            new Date(user.createdAt.seconds * 1000).toLocaleDateString() : 
-                            new Date(user.createdAt as Date).toLocaleDateString()
-                          ) : 
-                          (currentUser.metadata.creationTime ? 
-                            new Date(currentUser.metadata.creationTime).toLocaleDateString() : 
-                            'Date not available'
-                          )
-                        }
-                      </p>
-                      <button className="mt-2 bg-blue-600 text-white px-4 py-2 rounded" onClick={() => setEditMode(true)}>Edit Profile</button>
-                    </>
-                  )}
-                  {!isOwner && (
-                    <p className="mt-2 text-sm text-gray-500">
-                      Member since {user.createdAt ? 
-                        (user.createdAt && typeof user.createdAt === 'object' && 'seconds' in user.createdAt ? 
-                          new Date(user.createdAt.seconds * 1000).toLocaleDateString() : 
-                          new Date(user.createdAt as Date).toLocaleDateString()
-                        ) : 
+                  <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{user.displayName || 'Anonymous User'}</h1>
+                  <p className="text-gray-600 text-sm sm:text-base">@{user.username}</p>
+                  <p className="mt-2 text-xs sm:text-sm text-gray-500">
+                    Member since {user.createdAt ? 
+                      (user.createdAt && typeof user.createdAt === 'object' && 'seconds' in user.createdAt ? 
+                        new Date(user.createdAt.seconds * 1000).toLocaleDateString() : 
+                        new Date(user.createdAt as Date).toLocaleDateString()
+                      ) : 
+                      (isOwner && currentUser?.metadata.creationTime ? 
+                        new Date(currentUser.metadata.creationTime).toLocaleDateString() : 
                         'Date not available'
-                      }
-                    </p>
+                      )
+                    }
+                  </p>
+                  {isOwner && (
+                    <button 
+                      className="mt-3 w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors" 
+                      onClick={() => setEditMode(true)}
+                    >
+                      Edit Profile
+                    </button>
                   )}
                 </>
               )}
@@ -365,17 +376,26 @@ const UserProfile = () => {
         </div>
       </div>
 
-      <div className="mb-4 border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8">
+      {/* Mobile-friendly tabs */}
+      <div className="mb-6 border-b border-gray-200">
+        <nav className="flex space-x-1 sm:space-x-8 overflow-x-auto">
           <button
             onClick={() => setActiveTab('questions')}
-            className={`${activeTab === 'questions' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+            className={`${
+              activeTab === 'questions' 
+                ? 'border-blue-500 text-blue-600' 
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            } whitespace-nowrap py-3 sm:py-4 px-3 sm:px-1 border-b-2 font-medium text-sm flex-shrink-0`}
           >
             Questions ({questions.length})
           </button>
           <button
             onClick={() => setActiveTab('answers')}
-            className={`${activeTab === 'answers' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+            className={`${
+              activeTab === 'answers' 
+                ? 'border-blue-500 text-blue-600' 
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            } whitespace-nowrap py-3 sm:py-4 px-3 sm:px-1 border-b-2 font-medium text-sm flex-shrink-0`}
           >
             Answers ({answers.length})
           </button>

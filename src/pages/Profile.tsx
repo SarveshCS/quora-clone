@@ -244,8 +244,8 @@ const Profile = () => {
 
   if (!currentUser) {
     return (
-      <div className="max-w-4xl mx-auto p-4">
-        <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative" role="alert">
+      <div className="max-w-4xl mx-auto p-3 sm:p-4">
+        <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-3 sm:px-4 py-3 rounded relative text-sm sm:text-base" role="alert">
           <span className="block sm:inline">Please log in to view your profile.</span>
         </div>
       </div>
@@ -254,7 +254,7 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto p-4">
+      <div className="max-w-4xl mx-auto p-3 sm:p-4">
         <LoadingSpinner />
       </div>
     );
@@ -262,8 +262,8 @@ const Profile = () => {
 
   if (error) {
     return (
-      <div className="max-w-4xl mx-auto p-4">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <div className="max-w-4xl mx-auto p-3 sm:p-4">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-3 sm:px-4 py-3 rounded relative text-sm sm:text-base" role="alert">
           <span className="block sm:inline">{error}</span>
         </div>
       </div>
@@ -271,11 +271,11 @@ const Profile = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
-        <div className="px-4 py-5 sm:px-6">
-          <div className="flex items-center">
-            <div className="h-20 w-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+    <div className="max-w-4xl mx-auto p-3 sm:p-4">
+      <div className="bg-white shadow overflow-hidden rounded-lg sm:rounded-lg mb-6 sm:mb-8">
+        <div className="px-3 py-4 sm:px-4 sm:py-5 lg:px-6">
+          <div className="flex flex-col sm:flex-row sm:items-center">
+            <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden mx-auto sm:mx-0 mb-4 sm:mb-0">
               {currentUser.photoURL ? (
                 <img 
                   src={currentUser.photoURL} 
@@ -283,50 +283,50 @@ const Profile = () => {
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <span className="text-2xl text-gray-500">
+                <span className="text-lg sm:text-2xl text-gray-500">
                   {displayName?.charAt(0).toUpperCase() || username?.charAt(0).toUpperCase() || '?'}
                 </span>
               )}
             </div>
-            <div className="ml-6">
+            <div className="sm:ml-6 text-center sm:text-left">
               {editMode ? (
-                <form onSubmit={handleProfileUpdate} className="space-y-2">
+                <form onSubmit={handleProfileUpdate} className="space-y-3 sm:space-y-2">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Display Name</label>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700">Display Name</label>
                     <input
                       type="text"
                       value={displayName}
                       onChange={e => setDisplayName(e.target.value)}
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"
                       disabled={profileLoading}
                       maxLength={30}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Username</label>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700">Username</label>
                     <input
                       type="text"
                       value={username}
                       onChange={e => setUsername(e.target.value)}
-                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"
                       disabled={profileLoading}
                       maxLength={20}
                     />
-                    <p className="text-xs text-gray-500">Unique, 3-20 characters, letters, numbers, or underscores. Used in URLs.</p>
+                    <p className="text-xs text-gray-500 mt-1">Unique, 3-20 characters, letters, numbers, or underscores. Used in URLs.</p>
                   </div>
-                  {profileError && <div className="text-red-600 text-sm">{profileError}</div>}
-                  {profileSuccess && <div className="text-green-600 text-sm">{profileSuccess}</div>}
-                  <div className="flex space-x-2">
-                    <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded" disabled={profileLoading}>Save</button>
-                    <button type="button" className="bg-gray-300 text-gray-700 px-4 py-2 rounded" onClick={() => setEditMode(false)} disabled={profileLoading}>Cancel</button>
+                  {profileError && <div className="text-red-600 text-xs sm:text-sm">{profileError}</div>}
+                  {profileSuccess && <div className="text-green-600 text-xs sm:text-sm">{profileSuccess}</div>}
+                  <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                    <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded text-sm" disabled={profileLoading}>Save</button>
+                    <button type="button" className="bg-gray-300 text-gray-700 px-4 py-2 rounded text-sm" onClick={() => setEditMode(false)} disabled={profileLoading}>Cancel</button>
                   </div>
                 </form>
               ) : (
                 <>
-                  <h1 className="text-2xl font-bold text-gray-900">{displayName || 'Anonymous User'}</h1>
-                  <p className="text-gray-600">@{username}</p>
-                  <p className="mt-2 text-sm text-gray-500">Member since {new Date(currentUser.metadata.creationTime || '').toLocaleDateString()}</p>
-                  <button className="mt-2 bg-blue-600 text-white px-4 py-2 rounded" onClick={() => setEditMode(true)}>Edit Profile</button>
+                  <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{displayName || 'Anonymous User'}</h1>
+                  <p className="text-gray-600 text-sm sm:text-base">@{username}</p>
+                  <p className="mt-2 text-xs sm:text-sm text-gray-500">Member since {new Date(currentUser.metadata.creationTime || '').toLocaleDateString()}</p>
+                  <button className="mt-3 sm:mt-2 bg-blue-600 text-white px-4 py-2 rounded text-sm" onClick={() => setEditMode(true)}>Edit Profile</button>
                 </>
               )}
             </div>
@@ -335,16 +335,16 @@ const Profile = () => {
       </div>
 
       <div className="mb-4 border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8">
+        <nav className="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto">
           <button
             onClick={() => setActiveTab('questions')}
-            className={`${activeTab === 'questions' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+            className={`${activeTab === 'questions' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'} whitespace-nowrap py-3 sm:py-4 px-1 border-b-2 font-medium text-sm flex-shrink-0`}
           >
             Questions ({questions.length})
           </button>
           <button
             onClick={() => setActiveTab('answers')}
-            className={`${activeTab === 'answers' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+            className={`${activeTab === 'answers' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'} whitespace-nowrap py-3 sm:py-4 px-1 border-b-2 font-medium text-sm flex-shrink-0`}
           >
             Answers ({answers.length})
           </button>
@@ -352,9 +352,9 @@ const Profile = () => {
       </div>
 
       {activeTab === 'questions' ? (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {questions.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="text-center py-8 sm:py-12">
               <h3 className="mt-2 text-lg font-medium text-gray-900">No questions yet</h3>
               <p className="mt-1 text-sm text-gray-500">
                 You haven't asked any questions yet. 
@@ -363,13 +363,13 @@ const Profile = () => {
             </div>
           ) : (
             questions.map((question) => (
-              <div key={question.id} className="bg-white shadow overflow-hidden sm:rounded-lg">
-                <div className="px-4 py-5 sm:px-6">
-                  <div className="flex items-center justify-between">
+              <div key={question.id} className="bg-white shadow overflow-hidden rounded-lg sm:rounded-lg">
+                <div className="px-3 py-4 sm:px-4 sm:py-5 lg:px-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex-1 min-w-0">
                       <a 
                         href={`/question/${question.id}`}
-                        className="text-lg font-medium text-blue-600 hover:text-blue-800 truncate block whitespace-pre-wrap"
+                        className="text-base sm:text-lg font-medium text-blue-600 hover:text-blue-800 block whitespace-pre-wrap break-words"
                       >
                         <RenderTextWithLinks
                           text={question.title}
@@ -378,19 +378,19 @@ const Profile = () => {
                           onMentionClick={handleMentionClick}
                         />
                       </a>
-                      <div className="mt-1 flex items-center text-sm text-gray-500">
+                      <div className="mt-2 flex flex-wrap items-center text-xs sm:text-sm text-gray-500 gap-1 sm:gap-2">
                         <span>{question.answers} answers</span>
-                        <span className="mx-2">•</span>
+                        <span className="hidden sm:inline">•</span>
                         <span>{question.votes} votes</span>
-                        <span className="mx-2">•</span>
+                        <span className="hidden sm:inline">•</span>
                         <span>Asked on {formatDate(question.createdAt)}</span>
                       </div>
                     </div>
-                    <div className="ml-4">
-                      <span className="text-sm text-gray-500">by</span>
+                    <div className="mt-3 sm:mt-0 sm:ml-4 flex flex-col sm:flex-row sm:items-center">
+                      <span className="text-xs sm:text-sm text-gray-500">by</span>
                       <Link 
                         to={`/@${question.username}`}
-                        className="text-sm font-medium text-blue-600 hover:text-blue-800 ml-1"
+                        className="text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-800 sm:ml-1"
                       >
                         {question.username || 'unknown'}
                       </Link>
@@ -402,9 +402,9 @@ const Profile = () => {
           )}
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {answers.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="text-center py-8 sm:py-12">
               <h3 className="mt-2 text-lg font-medium text-gray-900">No answers yet</h3>
               <p className="mt-1 text-sm text-gray-500">
                 You haven't answered any questions yet. 
@@ -413,20 +413,20 @@ const Profile = () => {
             </div>
           ) : (
             answers.map((answer) => (
-              <div key={answer.id} className="bg-white shadow overflow-hidden sm:rounded-lg">
-                <div className="px-4 py-5 sm:px-6">
+              <div key={answer.id} className="bg-white shadow overflow-hidden rounded-lg sm:rounded-lg">
+                <div className="px-3 py-4 sm:px-4 sm:py-5 lg:px-6">
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-medium text-gray-500">
+                      <h3 className="text-xs sm:text-sm font-medium text-gray-500">
                         Answered on {formatDate(answer.createdAt)}
                       </h3>
                       <a 
                         href={`/question/${answer.questionId}`}
-                        className="text-lg font-medium text-blue-600 hover:text-blue-800 mt-1 block"
+                        className="text-base sm:text-lg font-medium text-blue-600 hover:text-blue-800 mt-1 block break-words"
                       >
                         {answer.questionTitle}
                       </a>
-                      <div className="mt-2 text-gray-600 line-clamp-2 whitespace-pre-wrap">
+                      <div className="mt-2 text-gray-600 line-clamp-2 whitespace-pre-wrap text-sm break-words">
                         <RenderTextWithLinks
                           text={answer.content}
                           availableUsers={availableUsers}
@@ -434,7 +434,7 @@ const Profile = () => {
                           onMentionClick={handleMentionClick}
                         />
                       </div>
-                      <div className="mt-2 flex items-center text-sm text-gray-500">
+                      <div className="mt-2 flex items-center text-xs sm:text-sm text-gray-500">
                         <span>{answer.votes} votes</span>
                       </div>
                     </div>

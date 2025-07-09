@@ -536,73 +536,75 @@ const Search = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Search</h1>
-        <p className="text-gray-600">Find questions, answers, and people in the community</p>
+    <div className="max-w-4xl mx-auto p-3 sm:p-4">
+      {/* Mobile-friendly Header */}
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Search</h1>
+        <p className="text-gray-600 text-sm sm:text-base">Find questions, answers, and people in the community</p>
       </div>
 
-      {/* Search Interface */}
-      <div className="bg-white shadow-sm border border-gray-200 rounded-lg p-6 mb-6">
-        {/* Search Type Toggle */}
-        <div className="flex space-x-4 mb-4">
+      {/* Mobile-optimized Search Interface */}
+      <div className="bg-white shadow-sm border border-gray-200 rounded-lg p-3 sm:p-6 mb-4 sm:mb-6">
+        {/* Mobile-friendly Search Type Toggle */}
+        <div className="flex space-x-2 sm:space-x-4 mb-4">
           <button
             onClick={() => handleSearchTypeChange('questions')}
-            className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium ${
+            className={`flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium ${
               searchType === 'questions'
                 ? 'bg-blue-100 text-blue-700'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
             }`}
           >
-            <FiMessageSquare className="w-4 h-4" />
+            <FiMessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
             <span>Questions</span>
           </button>
           <button
             onClick={() => handleSearchTypeChange('users')}
-            className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium ${
+            className={`flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium ${
               searchType === 'users'
                 ? 'bg-blue-100 text-blue-700'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
             }`}
           >
-            <FiUser className="w-4 h-4" />
+            <FiUser className="w-3 h-3 sm:w-4 sm:h-4" />
             <span>People</span>
           </button>
         </div>
 
-        {/* Search Mode Toggle for Questions */}
+        {/* Mobile-friendly Search Mode Toggle for Questions */}
         {searchType === 'questions' && (
-          <div className="flex space-x-2 mb-4">
-            <span className="text-sm text-gray-600 flex items-center">Search by:</span>
-            <button
-              onClick={() => setSearchBy('all')}
-              className={`px-3 py-1 text-xs font-medium rounded-full ${
-                searchBy === 'all'
-                  ? 'bg-green-100 text-green-700'
-                  : 'text-gray-500 bg-gray-100 hover:bg-gray-200'
-              }`}
-            >
-              All Content
-            </button>
-            <button
-              onClick={() => setSearchBy('tags')}
-              className={`px-3 py-1 text-xs font-medium rounded-full ${
-                searchBy === 'tags'
-                  ? 'bg-green-100 text-green-700'
-                  : 'text-gray-500 bg-gray-100 hover:bg-gray-200'
-              }`}
-            >
-              Tags Only
-            </button>
+          <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
+            <span className="text-xs sm:text-sm text-gray-600 flex items-center">Search by:</span>
+            <div className="flex space-x-2">
+              <button
+                onClick={() => setSearchBy('all')}
+                className={`px-2 sm:px-3 py-1 text-xs font-medium rounded-full ${
+                  searchBy === 'all'
+                    ? 'bg-green-100 text-green-700'
+                    : 'text-gray-500 bg-gray-100 hover:bg-gray-200'
+                }`}
+              >
+                All Content
+              </button>
+              <button
+                onClick={() => setSearchBy('tags')}
+                className={`px-2 sm:px-3 py-1 text-xs font-medium rounded-full ${
+                  searchBy === 'tags'
+                    ? 'bg-green-100 text-green-700'
+                    : 'text-gray-500 bg-gray-100 hover:bg-gray-200'
+                }`}
+              >
+                Tags Only
+              </button>
+            </div>
           </div>
         )}
 
-        {/* Search Input */}
-        <div className="flex space-x-3">
+        {/* Mobile-responsive Search Input */}
+        <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
           <div className="flex-1 relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiSearch className="h-5 w-5 text-gray-400" />
+              <FiSearch className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
             </div>
             <input
               type="text"
@@ -612,12 +614,12 @@ const Search = () => {
               placeholder={
                 searchType === 'questions'
                   ? searchBy === 'tags' 
-                    ? 'Search by tags (e.g., JavaScript, React, Programming)...'
+                    ? 'Search by tags (e.g., JavaScript, React)...'
                     : 'Search for questions, topics, or authors...'
                   : 'Search for people by name or username...'
               }
               title="Press Enter to search, Escape to clear"
-              className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full pl-9 sm:pl-10 pr-8 sm:pr-10 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm"
             />
             {searchTerm && (
               <button
@@ -625,14 +627,14 @@ const Search = () => {
                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
                 title="Clear search"
               >
-                <FiX className="h-5 w-5" />
+                <FiX className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
             )}
           </div>
           <button
             onClick={handleSearch}
             disabled={!searchTerm.trim() || loading}
-            className="px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full sm:w-auto px-4 sm:px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
           >
             {loading ? 'Searching...' : 'Search'}
           </button>
