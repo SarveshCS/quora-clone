@@ -36,14 +36,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-sm">
+    <nav className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center gap-4">
             <Link to="/" className="flex-shrink-0 flex items-center">
               <span className="text-xl font-bold text-blue-600">Quora Clone</span>
             </Link>
-            {/* Quora-style icons */}
+            {/* Navigation icons */}
             <Link to="/" className="p-2 hover:bg-gray-100 rounded-full" title="Home">
               <FiHome className="w-6 h-6 text-gray-600" />
             </Link>
@@ -60,7 +60,7 @@ const Navbar = () => {
               <>
                 <Link 
                   to="/ask" 
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                  className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-md hover:bg-blue-700"
                 >
                   Ask Question
                 </Link>
@@ -88,7 +88,7 @@ const Navbar = () => {
                 </Link>
                 <Link 
                   to="/register" 
-                  className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50"
+                  className="px-4 py-2 text-sm font-medium text-blue-600 border border-gray-300 rounded-md hover:bg-gray-50"
                 >
                   Sign Up
                 </Link>

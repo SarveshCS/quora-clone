@@ -268,7 +268,7 @@ const UserProfile = () => {
     return <div className="flex justify-center items-center h-64"><LoadingSpinner message="Loading profile..." /></div>;
   }
   if (error) {
-    return <div className="max-w-4xl mx-auto p-4"><div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">{error}</div></div>;
+    return <div className="max-w-4xl mx-auto p-4"><div className="text-red-600 bg-red-100 border border-red-400 px-4 py-3 rounded">{error}</div></div>;
   }
   if (!user) return null;
 
@@ -277,7 +277,7 @@ const UserProfile = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-8 border border-gray-200">
         <div className="px-4 py-5 sm:px-6">
           <div className="flex items-center">
             <div className="h-20 w-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">

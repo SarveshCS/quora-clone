@@ -179,20 +179,6 @@ export interface FormField<T> {
   validate: (value: T) => string | undefined;
 }
 
-// UI related types
-export type Theme = 'light' | 'dark' | 'system';
-
-export interface UiSettings {
-  theme: Theme;
-  fontSize: 'small' | 'medium' | 'large';
-  compactMode: boolean;
-  notifications: {
-    email: boolean;
-    push: boolean;
-    inApp: boolean;
-  };
-}
-
 // Authentication related types
 export interface AuthState {
   user: User | null;

@@ -1,17 +1,16 @@
-import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
-import { 
-  getAuth, 
-  GoogleAuthProvider, 
-  browserLocalPersistence, 
-  type Auth
-} from 'firebase/auth';
-import { 
-  getFirestore, 
-  enableIndexedDbPersistence, 
-  type Firestore 
-} from 'firebase/firestore';
+import { initializeApp, type FirebaseApp } from 'firebase/app';
+import { getAuth, GoogleAuthProvider, type Auth } from 'firebase/auth';
+import { getFirestore, type Firestore } from 'firebase/firestore';
+import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
-// Firebase configuration
+// Debug: Check if environment variables are loaded
+console.log('Firebase env check:', {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY ? 'loaded' : 'missing',
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ? 'loaded' : 'missing',
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID ? 'loaded' : 'missing',
+});
+
+// Firebase configuration using environment variables
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -22,53 +21,29 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase
-let app: FirebaseApp;
-let auth: Auth;
-let db: Firestore;
-
-// Check if Firebase is already initialized to avoid duplicate apps
-if (!getApps().length) {
-  try {
-    // Initialize Firebase
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-    
-    // Set auth persistence
-    auth.setPersistence(browserLocalPersistence).catch((error) => {
-      console.error('Error setting auth persistence:', error);
-    });
-
-    // Enable offline persistence for Firestore
-    if (typeof window !== 'undefined') { // Only in browser
-      enableIndexedDbPersistence(db).catch((err) => {
-        if (err.code === 'failed-precondition') {
-          console.warn('Multiple tabs open, persistence can only be enabled in one tab at a time.');
-        } else if (err.code === 'unimplemented') {
-          console.warn('The current browser does not support all of the features required to enable persistence.');
-        } else {
-          console.error('Error enabling persistence:', err);
-        }
-      });
-    }
-
-    // Log successful initialization
-    console.log('Firebase initialized successfully');
-  } catch (error) {
-    console.error('Firebase initialization error:', error);
-    throw error; // Rethrow to prevent app from starting with broken Firebase
-  }
-} else {
-  // Use existing app instance
-  app = getApp();
-  auth = getAuth(app);
-  db = getFirestore(app);
+// Validate configuration
+if (!firebaseConfig.apiKey || !firebaseConfig.authDomain || !firebaseConfig.projectId) {
+  console.error('Firebase configuration is incomplete. Please check your environment variables.');
+  throw new Error('Firebase configuration is incomplete');
 }
 
-// Initialize Google Auth Provider
-export const googleProvider = new GoogleAuthProvider();
+// Initialize Firebase app first
+let app: FirebaseApp;
+try {
+  app = initializeApp(firebaseConfig);
+  console.log('Firebase app initialized successfully');
+} catch (error) {
+  console.error('Error initializing Firebase app:', error);
+  throw error;
+}
 
-// Export initialized services
-export { auth, db };
+// Initialize Firebase services with proper types
+const auth: Auth = getAuth(app);
+const db: Firestore = getFirestore(app);
+const storage: FirebaseStorage = getStorage(app);
+const googleProvider = new GoogleAuthProvider();
+
+console.log('All Firebase services initialized successfully');
+
+export { auth, db, storage, googleProvider };
 export default app;

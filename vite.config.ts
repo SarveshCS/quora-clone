@@ -89,11 +89,10 @@ export default defineConfig({
       'react-router-dom',
       'date-fns',
       'date-fns/format',
-      'date-fns/formatDistanceToNow'
-    ],
-    exclude: [
-      'firebase/firestore',
+      'date-fns/formatDistanceToNow',
+      'firebase/app',
       'firebase/auth',
+      'firebase/firestore',
       'firebase/storage'
     ]
   },
