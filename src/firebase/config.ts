@@ -5,14 +5,14 @@ import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 // Debug: Check if environment variables are loaded
 console.log('Firebase env check:', {
-  apiToken: import.meta.env.VITE_FIREBASE_API_TOKEN ? 'loaded' : 'missing',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY ? 'loaded' : 'missing',
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ? 'loaded' : 'missing',
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID ? 'loaded' : 'missing',
 });
 
 // Firebase configuration using environment variables
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_TOKEN,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
